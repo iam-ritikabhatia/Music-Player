@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BeatBot</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="main_div">
+        <div class="music_container">
+            <h2 id="title">Tu Mileya</h2>
+            <h3 id="artist">Darshan Raval</h3>
+            <div class="img_container">
+                <img src="Images/Thappa_1.jpg" alt="">
+                
+            </div>
+            <audio src="music/Thappa_1.mp3"></audio>
+
+            <!-- controls -->
+            <div class="music_controls">
+                <i class="fas fa-backward" id="prev" title="previous"></i>
+                <i class="fas fa-play" id="play" title="play"></i>
+                <i class="fas fa-forward" id="next" title="next"></i>
+            </div>
+        </div>
+    </div>
+    <script>
+        const music = document.querySelector("audio");
+        const img = document.querySelector("img");
+        const play = document.getElementById("play");
+        const artist = document.getElementById("artist");
+        const title = document.getElementById("title");
+        const prev = document.getElementById("prev");
+        const next = document.getElementById("next");
+
+        const songs = [{
+            name: "Thappa_1",
+            title: "Tu Mileya",
+            artist: "Darshan Rawal"
+        },
+        {
+            name:"Thappa_2",
+            title:"Tera_Naam",
+            artist: "Babbal Rai"
+        },
+        {
+            name:"Thappa_3",
+            title:"Uche_Uche_Kad",
+            artist: "Babbal Rai"
+        }
+        ];
+        let isPlaying = false;
+        // for play
+        const playMusic = () => {
+            isPlaying = true;
+            music.play();
+            play.classList.replace('fa-play', "fa-pause");
+            img.classList.add("anime");
+        };
+
+        // for pause
+        const pauseMusic = () => {
+            isPlaying = false;
+            music.pause();
+            play.classList.replace("fa-pause", "fa-play");
+            img.classList.remove("anime");
+        };
+
+        play.addEventListener('click', () => {
+            isPlaying ? pauseMusic() : playMusic();
+        });
+
+        //changing the music data
+        const loadSong = (songs) =>{
+title.textContent = songs.title;
+artist.textContent = songs.artist;
+music.src = "music/" +songs.name+".mp3";
+img.src = "images/" +songs.name+".jpg";
+        };
+
+        songIndex =0;
+// loadSong (songs[1]);
+
+        const nextSong =() => {
+            songIndex = (songIndex +1) %songs.length;
+            loadSong(songs[songIndex]);
+            playMusic();
+        
+        };
+        const prevSong =() => {
+            songIndex = (songIndex -1 + songs.length)% songs.length;
+            loadSong(songs[songIndex]);
+            playMusic();
+        
+        };
+
+        next.addEventListener ('click' ,nextSong);
+prev.addEventListener('click', prevSong );
+
+
+
+
+    </script>
+</body>
+
+</html>
